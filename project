@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="pt-BR">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maria Morena e Amigas ★</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&amp;family=Pixelify+Sans:wght@400;700&amp;family=Silkscreen&amp;display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <style>
+        * { image-rendering: auto; }
+        body { font-family: 'VT323', monospace; }
+        .font-pixel { font-family: 'Pixelify Sans', cursive; }
+        .font-silk { font-family: 'Silkscreen', cursive; }
+        
+        .page-maria { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Ctext y='16' font-size='16'%3E🌹%3C/text%3E%3C/svg%3E"), auto; }
+        .page-sofia { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Ctext y='16' font-size='16'%3E💖%3C/text%3E%3C/svg%3E"), auto; }
+        .page-luna { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Ctext y='16' font-size='16'%3E🖤%3C/text%3E%3C/svg%3E"), auto; }
+        .page-bia { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Ctext y='16' font-size='16'%3E🫧%3C/text%3E%3C/svg%3E"), auto; }
+
+        .nav-tab { 
+            padding: 6px 16px; 
+            border: 2px outset #ccc;
+            background: linear-gradient(180deg, #dfdfdf, #b8b8b8);
+            font-family: 'Pixelify Sans'; 
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.1s;
+        }
+        .nav-tab:hover { background: linear-gradient(180deg, #fff, #ddd); }
+        .nav-tab.active { border-style: inset; background: linear-gradient(180deg, #fff, #eee); }
+
+        .xp-window {
+            border: 2px solid #0054e3;
+            border-radius: 8px 8px 0 0;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            position: absolute;
+        }
+        .xp-titlebar {
+            background: linear-gradient(180deg, #0078d7, #003c9e);
+            color: white;
+            padding: 4px 8px;
+            font-size: 13px;
+            font-family: 'Pixelify Sans';
+            border-radius: 6px 6px 0 0;
+            cursor: move;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+        .xp-btn { 
+            width: 18px; height: 18px; 
+            border: 1px outset #ccc; 
+            background: linear-gradient(180deg,#ddd,#aaa); 
+            font-size: 10px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            cursor: pointer;
+            border-radius: 2px;
+        }
+        .xp-body { background: #ece9d8; padding: 10px; font-size: 14px; }
+
+        .taskbar {
+            position: fixed; bottom: 0; left: 0; right: 0; z-index: 9999;
+            background: linear-gradient(180deg, #245edb 0%, #3a7dff 3%, #245edb 6%, #1a4db5 95%, #0a2a6e 100%);
+            height: 36px;
+            display: flex; align-items: center;
+            padding: 0 8px;
+            border-top: 2px solid #5b9dff;
+        }
+        .start-btn {
+            background: linear-gradient(180deg, #3c9a3c, #1e6e1e);
+            border: 1px outset #5a5;
+            border-radius: 6px;
+            color: white;
+            font-family: 'Pixelify Sans';
+            font-weight: bold;
+            padding: 2px 12px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .winamp {
+            background: #232323;
+            border: 2px solid #555;
+            border-radius: 4px;
+            padding: 8px;
+            width: 260px;
+            font-size: 12px;
+            color: #0f0;
+        }
+        .winamp-display {
+            background: #000;
+            border: 1px inset #333;
+            padding: 4px 8px;
+            margin-bottom: 6px;
+            color: #0f0;
+            font-family: 'VT323';
+            font-size: 14px;
+        }
+        .winamp-btn {
+            background: linear-gradient(180deg, #555, #333);
+            border: 1px outset #666;
+            color: #ccc;
+            padding: 2px 8px;
+            cursor: pointer;
+            font-size: 11px;
+            border-radius: 2px;
+        }
+
+        .polaroid {
+            background: white;
+            padding: 8px 8px 30px 8px;
+            box-shadow: 3px 3px 8px rgba(0,0,0,0.3);
+            display: inline-block;
+        }
+        .polaroid img { width: 150px; height: 120px; object-fit: cover; }
+
+        .blink { animation: blink 1s step-end infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        .float-anim { animation: floaty 3s ease-in-out infinite; }
+        @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+        .sparkle { animation: sparkle 1.5s ease-in-out infinite alternate; }
+        @keyframes sparkle { 0% { opacity: 0.5; transform: scale(0.9); } 100% { opacity: 1; transform: scale(1.1); } }
+
+        .marquee-text { 
+            animation: marquee 12s linear infinite;
+            white-space: nowrap;
+        }
+        @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
+        .vhs-overlay {
+            pointer-events: none;
+            position: absolute; inset: 0;
+            background: repeating-linear-gradient(0deg, rgba(0,0,0,0.03) 0px, rgba(0,0,0,0.03) 1px, transparent 1px, transparent 3px);
+            mix-blend-mode: overlay;
+        }
+
+        .guestbook-entry {
+            border: 1px dashed;
+            padding: 4px 8px;
+            margin: 4px 0;
+            font-size: 13px;
+        }
+
+        .sticker {
+            position: absolute;
+            font-size: 28px;
+            pointer-events: none;
+            z-index: 50;
+        }
+    </style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/resizing_sdk.js" type="text/javascript"></script>
+ <script src="/_sdk/telemetry_sdk.js"></script></head>
+ <body data-template-id="__page-root" class="min-h-screen overflow-x-hidden pb-10"><!-- TOP NAV -->
+  <nav class="fixed top-0 left-0 right-0 z-[9998] flex items-center justify-center gap-2 p-2" style="background: linear-gradient(180deg, #ece9d8, #d4cfc0); border-bottom: 2px groove #fff;"><button class="nav-tab active" onclick="switchPage('maria')">★ MARIA MORENA ★</button> <button class="nav-tab" onclick="switchPage('sofia')">♡ SOFIA ♡</button> <button class="nav-tab" onclick="switchPage('luna')">☆ LUNA ☆</button> <button class="nav-tab" onclick="switchPage('bia')">✿ BIA ✿</button>
+  </nav><!-- ==================== MARIA MORENA ==================== -->
+  <section id="page-maria" class="page-maria pt-14 pb-12 min-h-screen relative" style="background: linear-gradient(135deg, #1a0a10 0%, #2d1525 30%, #1a0a10 100%);"><!-- Decorative stickers --> <span class="sticker float-anim" style="top:80px;left:20px;">🌹</span> <span class="sticker sparkle" style="top:120px;right:40px;">✨</span> <span class="sticker float-anim" style="top:300px;left:60px;">🖤</span> <span class="sticker sparkle" style="top:400px;right:80px;">⭐</span> <span class="sticker float-anim" style="top:600px;left:30px;">🎀</span> <span class="sticker" style="top:200px;right:120px;">💿</span> <span class="sticker sparkle" style="top:500px;right:20px;">🌙</span> <span class="sticker float-anim" style="top:700px;left:100px;">🥀</span> <span class="sticker" style="top:350px;left:200px;">📼</span> <span class="sticker sparkle" style="top:150px;left:300px;">♱</span>
+   <div class="max-w-5xl mx-auto px-4 relative"><!-- Header -->
+    <div class="text-center mb-8">
+     <h1 data-template-id="maria-title" class="canva-text text-5xl font-pixel" style="text-shadow: 0 0 20px #ff69b4, 0 0 40px #800040;"></h1>
+     <p data-template-id="maria-subtitle" class="canva-text text-lg mt-2 italic opacity-80"></p>
+     <div class="mt-2 overflow-hidden w-64 mx-auto"><span class="marquee-text text-pink-300 text-sm">★ born to die ★ ultraviolence ★ honeymoon ★ lust for life ★</span>
+     </div>
+    </div><!-- Status + Counter -->
+    <div class="flex justify-center gap-6 mb-6 text-sm"><span class="bg-black/50 border border-pink-900 px-3 py-1 text-pink-200"> <span class="blink" style="color:#0f0;">●</span> <span data-template-id="maria-status" class="canva-text"></span> </span> <span class="bg-black/50 border border-pink-900 px-3 py-1 text-pink-200"> visitors: <span id="maria-counter" class="text-yellow-300">0</span> </span>
+    </div><!-- About Me Window -->
+    <div class="xp-window relative" style="position:relative; margin: 20px auto; max-width:400px;" id="maria-about-win">
+     <div class="xp-titlebar">
+      <span>about_me.txt</span><span class="xp-btn">×</span>
+     </div>
+     <div class="xp-body">
+      <p data-template-id="maria-about" class="canva-text text-sm" style="color:#333;"></p>
+     </div>
+    </div><!-- Polaroids -->
+    <div class="flex flex-wrap justify-center gap-4 my-8">
+     <div class="polaroid" style="transform: rotate(-3deg);"><img data-template-id="maria-pol-1" class="canva-image" loading="lazy">
+     </div>
+     <div class="polaroid" style="transform: rotate(2deg);"><img data-template-id="maria-pol-2" class="canva-image" loading="lazy">
+     </div>
+    </div><!-- Moodboard -->
+    <div class="text-center mb-4">
+     <h2 data-template-id="maria-mood-title" class="canva-text text-2xl font-pixel" style="text-shadow: 0 0 10px #800040;"></h2>
+    </div>
+    <div class="grid grid-cols-2 gap-3 max-w-md mx-auto mb-8">
+     <div class="border-2 border-pink-900/50">
+      <img data-template-id="maria-mood-1" class="canva-image w-full h-40 object-cover" loading="lazy">
+     </div>
+     <div class="border-2 border-pink-900/50">
+      <img data-template-id="maria-mood-2" class="canva-image w-full h-40 object-cover" loading="lazy">
+     </div>
+    </div><!-- Favorite Things -->
+    <div class="xp-window relative" style="position:relative; margin: 20px auto; max-width:350px;">
+     <div class="xp-titlebar">
+      <span>my_fav_things.exe</span><span class="xp-btn">×</span>
+     </div>
+     <div class="xp-body text-sm" style="color:#333;">
+      <p data-template-id="maria-favs" class="canva-text"></p>
+     </div>
+    </div><!-- Currently Obsessed -->
+    <div class="bg-black/40 border border-pink-800 rounded p-4 max-w-sm mx-auto my-6">
+     <h3 data-template-id="maria-obsessed-title" class="canva-text text-lg font-pixel text-center mb-2"></h3>
+     <p data-template-id="maria-obsessed" class="canva-text text-sm text-center"></p>
+    </div><!-- Winamp -->
+    <div class="winamp mx-auto my-6">
+     <div class="winamp-display" id="maria-winamp-display">
+      ♫ Lana Del Rey - Video Games
+     </div>
+     <div class="flex gap-1"><button class="winamp-btn" onclick="togglePlay('maria')">▶</button> <button class="winamp-btn" onclick="stopPlay('maria')">■</button> <button class="winamp-btn" onclick="nextTrack('maria')">▶▶</button>
+     </div>
+     <div class="text-xs mt-2 text-gray-400">
+      playlist: sad girl hours vol.3
+     </div>
+    </div><!-- Guestbook -->
+    <div class="xp-window relative" style="position:relative; margin: 20px auto; max-width:400px;">
+     <div class="xp-titlebar">
+      <span>guestbook ♡</span><span class="xp-btn">×</span>
+     </div>
+     <div class="xp-body">
+      <div id="maria-guestbook" class="max-h-32 overflow-y-auto mb-2">
+       <div class="guestbook-entry" style="border-color:#c9a;color:#633;">
+        ~*xoxo u r so cool*~ - luna
+       </div>
+      </div>
+      <form onsubmit="addGuestbook(event,'maria')" class="flex gap-1"><input type="text" id="maria-gb-input" class="flex-1 border border-gray-400 px-2 py-1 text-sm" placeholder="leave a msg..."> <button type="submit" class="winamp-btn">sign!</button>
+      </form>
+     </div>
+    </div>
+   </div>
+  </section><!-- ==================== SOFIA ==================== -->
+  <section id="page-sofia" class="page-sofia pt-14 pb-12 min-h-screen relative hidden" style="background: linear-gradient(180deg, #ffe4f3 0%, #fff0f8 50%, #e8f4ff 100%);"><span class="sticker float-anim" style="top:80px;left:30px;">🦋</span> <span class="sticker sparkle" style="top:130px;right:50px;">💎</span> <span class="sticker float-anim" style="top:250px;left:80px;">💖</span> <span class="sticker sparkle" style="top:350px;right:30px;">⭐</span> <span class="sticker float-anim" style="top:450px;left:20px;">👛</span> <span class="sticker" style="top:180px;right:150px;">📱</span> <span class="sticker sparkle" style="top:550px;right:60px;">✨</span> <span class="sticker float-anim" style="top:650px;left:100px;">💋</span> <span class="sticker" style="top:300px;left:250px;">🎀</span> <span class="sticker sparkle" style="top:100px;left:180px;">♡</span>
+   <div class="max-w-5xl mx-auto px-4 relative">
+    <div class="text-center mb-8">
+     <h1 data-template-id="sofia-title" class="canva-text text-5xl font-pixel" style="text-shadow: 2px 2px 0 #ff69b4, -1px -1px 0 #c0c0c0;"></h1>
+     <p data-template-id="sofia-subtitle" class="canva-text text-lg mt-2"></p>
+     <div class="mt-2 overflow-hidden w-72 mx-auto"><span class="marquee-text text-pink-500 text-sm font-bold">♡ bratz ♡ glitter ♡ pink ♡ butterfly ♡ princess ♡</span>
+     </div>
+    </div>
+    <div class="flex justify-center gap-6 mb-6 text-sm"><span style="background: linear-gradient(135deg,#ff69b4,#ff1493); border: 2px solid silver; padding: 4px 12px; color: white; border-radius: 20px;"> <span class="blink">●</span> <span data-template-id="sofia-status" class="canva-text"></span> </span> <span style="background: linear-gradient(135deg,#ff69b4,#ff1493); border: 2px solid silver; padding: 4px 12px; color: white; border-radius: 20px;"> visitors: <span id="sofia-counter">0</span> </span>
+    </div><!-- About -->
+    <div style="background: linear-gradient(135deg, #fff, #ffe0f0); border: 3px solid #ff69b4; border-radius: 16px; padding: 16px; max-width: 400px; margin: 20px auto; box-shadow: 4px 4px 0 silver;">
+     <h3 style="color:#ff1493; font-family:'Pixelify Sans'; font-size:18px; text-align:center;">♡ about me ♡</h3>
+     <p data-template-id="sofia-about" class="canva-text text-sm" style="color:#880044;"></p>
+    </div><!-- Polaroids -->
+    <div class="flex flex-wrap justify-center gap-4 my-8">
+     <div class="polaroid" style="transform: rotate(-4deg); border: 3px solid #ff69b4;"><img data-template-id="sofia-pol-1" class="canva-image" loading="lazy">
+     </div>
+     <div class="polaroid" style="transform: rotate(3deg); border: 3px solid #ff69b4;"><img data-template-id="sofia-pol-2" class="canva-image" loading="lazy">
+     </div>
+    </div><!-- Moodboard -->
+    <h2 data-template-id="sofia-mood-title" class="canva-text text-2xl font-pixel text-center mb-4" style="color:#ff1493;"></h2>
+    <div class="grid grid-cols-2 gap-3 max-w-md mx-auto mb-8">
+     <div style="border: 3px solid #c0c0c0; border-radius:8px; overflow:hidden;">
+      <img data-template-id="sofia-mood-1" class="canva-image w-full h-40 object-cover" loading="lazy">
+     </div>
+     <div style="border: 3px solid #c0c0c0; border-radius:8px; overflow:hidden;">
+      <img data-template-id="sofia-mood-2" class="canva-image w-full h-40 object-cover" loading="lazy">
+     </div>
+    </div><!-- Favs -->
+    <div style="background:#fff; border:3px double #ff69b4; border-radius:12px; padding:12px; max-width:350px; margin:20px auto;">
+     <h3 style="color:#ff1493; font-family:'Pixelify Sans'; text-align:center;">my fav things 💕</h3>
+     <p data-template-id="sofia-favs" class="canva-text text-sm" style="color:#880044;"></p>
+    </div><!-- Obsessed -->
+    <div style="background: linear-gradient(135deg,#ffe0f0,#e0f0ff); border:2px solid silver; border-radius:16px; padding:12px; max-width:350px; margin:20px auto;">
+     <h3 data-template-id="sofia-obsessed-title" class="canva-text font-pixel text-center" style="color:#ff1493;"></h3>
+     <p data-template-id="sofia-obsessed" class="canva-text text-sm text-center" style="color:#660033;"></p>
+    </div><!-- Winamp -->
+    <div class="winamp mx-auto my-6" style="background:linear-gradient(180deg,#ff69b4,#cc0066); border-color:#ff99cc;">
+     <div class="winamp-display" id="sofia-winamp-display" style="color:#ff69b4;">
+      ♫ Destiny's Child - Say My Name
+     </div>
+     <div class="flex gap-1"><button class="winamp-btn" onclick="togglePlay('sofia')">▶</button> <button class="winamp-btn" onclick="stopPlay('sofia')">■</button> <button class="winamp-btn" onclick="nextTrack('sofia')">▶▶</button>
+     </div>
+    </div><!-- Guestbook -->
+    <div style="background:#fff; border:3px solid #ff69b4; border-radius:12px; padding:12px; max-width:400px; margin:20px auto;">
+     <h3 style="color:#ff1493; font-family:'Pixelify Sans'; text-align:center;">guestbook 💌</h3>
+     <div id="sofia-guestbook" class="max-h-32 overflow-y-auto mb-2">
+      <div class="guestbook-entry" style="border-color:#f9c; color:#c06;">
+       omg ur page is so cute!! - bia 💖
+      </div>
+     </div>
+     <form onsubmit="addGuestbook(event,'sofia')" class="flex gap-1"><input type="text" id="sofia-gb-input" class="flex-1 border-2 border-pink-300 rounded-full px-3 py-1 text-sm" placeholder="leave a msg..."> <button type="submit" style="background:#ff69b4; color:white; border:none; border-radius:20px; padding:4px 12px; font-size:12px; cursor:pointer;">sign!</button>
+     </form>
+    </div>
+   </div>
+  </section><!-- ==================== LUNA ==================== -->
+  <section id="page-luna" class="page-luna pt-14 pb-12 min-h-screen relative hidden" style="background: linear-gradient(180deg, #050510 0%, #0a0a20 50%, #050510 100%);">
+   <div class="vhs-overlay"></div><span class="sticker float-anim" style="top:80px;left:20px; opacity:0.6;">☆</span> <span class="sticker sparkle" style="top:150px;right:40px; opacity:0.5;">✧</span> <span class="sticker float-anim" style="top:300px;left:50px; opacity:0.4;">💿</span> <span class="sticker" style="top:400px;right:100px; opacity:0.5;">⚝</span> <span class="sticker sparkle" style="top:500px;left:80px; opacity:0.3;">✦</span> <span class="sticker float-anim" style="top:200px;right:60px; opacity:0.4;">🗡️</span> <span class="sticker" style="top:600px;right:30px; opacity:0.5;">⛓️</span> <span class="sticker sparkle" style="top:350px;left:150px; opacity:0.4;">☽</span>
+   <div class="max-w-5xl mx-auto px-4 relative">
+    <div class="text-center mb-8">
+     <h1 data-template-id="luna-title" class="canva-text text-5xl font-pixel" style="text-shadow: 0 0 10px #0ff, 0 0 30px #008;"></h1>
+     <p data-template-id="luna-subtitle" class="canva-text text-lg mt-2 opacity-60"></p>
+     <div class="mt-2 overflow-hidden w-64 mx-auto"><span class="marquee-text text-cyan-400/60 text-xs">drain gang ☆ bladee ☆ ecco2k ☆ thaiboy digital ☆ yung lean ☆</span>
+     </div>
+    </div>
+    <div class="flex justify-center gap-6 mb-6 text-xs"><span style="background:#111; border:1px solid #0ff3; padding:4px 12px; color:#0ff;"> <span class="blink" style="color:#0ff;">●</span> <span data-template-id="luna-status" class="canva-text"></span> </span> <span style="background:#111; border:1px solid #0ff3; padding:4px 12px; color:#555;"> views: <span id="luna-counter" style="color:#0ff;">0</span> </span>
+    </div><!-- About - forum style -->
+    <div style="background:#0a0a15; border:1px solid #1a1a3a; max-width:420px; margin:20px auto; font-size:13px;">
+     <div style="background:#111128; padding:4px 8px; color:#556; border-bottom:1px solid #1a1a3a; font-family:'Silkscreen'; font-size:10px;">
+      user profile :: luna_drain
+     </div>
+     <div style="padding:10px; color:#889;">
+      <p data-template-id="luna-about" class="canva-text"></p>
+     </div>
+    </div><!-- Polaroids -->
+    <div class="flex flex-wrap justify-center gap-4 my-8">
+     <div class="polaroid" style="transform:rotate(-2deg); background:#111; padding:6px; border:1px solid #222;"><img data-template-id="luna-pol-1" class="canva-image" loading="lazy" style="filter:contrast(1.1) brightness(0.8);">
+     </div>
+     <div class="polaroid" style="transform:rotate(1deg); background:#111; padding:6px; border:1px solid #222;"><img data-template-id="luna-pol-2" class="canva-image" loading="lazy" style="filter:contrast(1.1) brightness(0.8);">
+     </div>
+    </div><!-- Moodboard -->
+    <h2 data-template-id="luna-mood-title" class="canva-text text-xl font-silk text-center mb-4" style="color:#0ff8;"></h2>
+    <div class="grid grid-cols-2 gap-2 max-w-md mx-auto mb-8">
+     <div style="border:1px solid #1a1a3a;">
+      <img data-template-id="luna-mood-1" class="canva-image w-full h-40 object-cover" loading="lazy" style="filter:saturate(0.6) brightness(0.7);">
+     </div>
+     <div style="border:1px solid #1a1a3a;">
+      <img data-template-id="luna-mood-2" class="canva-image w-full h-40 object-cover" loading="lazy" style="filter:saturate(0.6) brightness(0.7);">
+     </div>
+    </div><!-- Favs -->
+    <div style="background:#0a0a15; border:1px solid #1a1a3a; padding:10px; max-width:350px; margin:20px auto;">
+     <h3 style="color:#0ff6; font-family:'Silkscreen'; font-size:11px; margin-bottom:6px;">fav_things.log</h3>
+     <p data-template-id="luna-favs" class="canva-text text-xs" style="color:#667;"></p>
+    </div><!-- Obsessed -->
+    <div style="background:#0a0a15; border:1px solid #0ff2; padding:10px; max-width:350px; margin:20px auto;">
+     <h3 data-template-id="luna-obsessed-title" class="canva-text font-silk text-center text-xs" style="color:#0ff6;"></h3>
+     <p data-template-id="luna-obsessed" class="canva-text text-xs text-center" style="color:#556;"></p>
+    </div><!-- Winamp -->
+    <div class="winamp mx-auto my-6" style="background:#080810; border-color:#1a1a3a;">
+     <div class="winamp-display" id="luna-winamp-display" style="color:#0ff;">
+      ♫ Bladee - Obedient
+     </div>
+     <div class="flex gap-1"><button class="winamp-btn" onclick="togglePlay('luna')" style="color:#0ff;">▶</button> <button class="winamp-btn" onclick="stopPlay('luna')" style="color:#0ff;">■</button> <button class="winamp-btn" onclick="nextTrack('luna')" style="color:#0ff;">▶▶</button>
+     </div>
+    </div><!-- Guestbook -->
+    <div style="background:#0a0a15; border:1px solid #1a1a3a; padding:10px; max-width:400px; margin:20px auto;">
+     <div style="color:#334; font-family:'Silkscreen'; font-size:10px; margin-bottom:6px;">
+      guestbook.dat
+     </div>
+     <div id="luna-guestbook" class="max-h-32 overflow-y-auto mb-2">
+      <div class="guestbook-entry" style="border-color:#1a1a3a; color:#556;">
+       nice site... - anon
+      </div>
+     </div>
+     <form onsubmit="addGuestbook(event,'luna')" class="flex gap-1"><input type="text" id="luna-gb-input" class="flex-1 text-xs px-2 py-1" style="background:#050510; border:1px solid #1a1a3a; color:#0ff;" placeholder="msg..."> <button type="submit" class="winamp-btn" style="color:#0ff;">submit</button>
+     </form>
+    </div>
+   </div>
+  </section><!-- ==================== BIA ==================== -->
+  <section id="page-bia" class="page-bia pt-14 pb-12 min-h-screen relative hidden" style="background: linear-gradient(180deg, #d4f5ff 0%, #e8fff8 30%, #d0f8ff 70%, #b8f0e0 100%);"><span class="sticker float-anim" style="top:80px;left:30px;">🐠</span> <span class="sticker sparkle" style="top:130px;right:50px;">🫧</span> <span class="sticker float-anim" style="top:280px;left:60px;">🌍</span> <span class="sticker sparkle" style="top:380px;right:40px;">☁️</span> <span class="sticker float-anim" style="top:500px;left:40px;">🌊</span> <span class="sticker" style="top:200px;right:120px;">🎮</span> <span class="sticker sparkle" style="top:600px;right:70px;">💧</span> <span class="sticker float-anim" style="top:150px;left:200px;">🌿</span> <span class="sticker" style="top:450px;left:120px;">🐬</span> <span class="sticker sparkle" style="top:350px;right:180px;">✨</span>
+   <div class="max-w-5xl mx-auto px-4 relative">
+    <div class="text-center mb-8">
+     <h1 data-template-id="bia-title" class="canva-text text-5xl font-pixel" style="text-shadow: 2px 2px 0 #00bcd4, 0 0 20px #00bcd440;"></h1>
+     <p data-template-id="bia-subtitle" class="canva-text text-lg mt-2"></p>
+     <div class="mt-2 overflow-hidden w-64 mx-auto"><span class="marquee-text text-teal-600 text-sm">~ welcome 2 the future ~ internet is beautiful ~ web 2.0 ~</span>
+     </div>
+    </div>
+    <div class="flex justify-center gap-6 mb-6 text-sm"><span style="background: linear-gradient(135deg,#00bcd4,#4caf50); padding:4px 14px; color:white; border-radius:20px; border:2px solid white; box-shadow: 0 2px 8px rgba(0,188,212,0.3);"> <span class="blink">●</span> <span data-template-id="bia-status" class="canva-text"></span> </span> <span style="background: linear-gradient(135deg,#00bcd4,#4caf50); padding:4px 14px; color:white; border-radius:20px; border:2px solid white;"> visitors: <span id="bia-counter">0</span> </span>
+    </div><!-- About -->
+    <div style="background: white; border:2px solid #00bcd4; border-radius:16px; padding:16px; max-width:400px; margin:20px auto; box-shadow: 0 4px 20px rgba(0,188,212,0.2);">
+     <h3 style="color:#00838f; font-family:'Pixelify Sans'; text-align:center; font-size:18px;">🌍 about me</h3>
+     <p data-template-id="bia-about" class="canva-text text-sm" style="color:#37474f;"></p>
+    </div><!-- Polaroids -->
+    <div class="flex flex-wrap justify-center gap-4 my-8">
+     <div class="polaroid" style="transform:rotate(-3deg); border:2px solid #00bcd4;"><img data-template-id="bia-pol-1" class="canva-image" loading="lazy">
+     </div>
+     <div class="polaroid" style="transform:rotate(4deg); border:2px solid #4caf50;"><img data-template-id="bia-pol-2" class="canva-image" loading="lazy">
+     </div>
+    </div><!-- Moodboard -->
+    <h2 data-template-id="bia-mood-title" class="canva-text text-2xl font-pixel text-center mb-4" style="color:#00838f;"></h2>
+    <div class="grid grid-cols-2 gap-3 max-w-md mx-auto mb-8">
+     <div style="border:2px solid #80deea; border-radius:12px; overflow:hidden;">
+      <img data-template-id="bia-mood-1" class="canva-image w-full h-40 object-cover" loading="lazy">
+     </div>
+     <div style="border:2px solid #a5d6a7; border-radius:12px; overflow:hidden;">
+      <img data-template-id="bia-mood-2" class="canva-image w-full h-40 object-cover" loading="lazy">
+     </div>
+    </div><!-- Favs -->
+    <div style="background:white; border:2px solid #4caf50; border-radius:12px; padding:12px; max-width:350px; margin:20px auto;">
+     <h3 style="color:#2e7d32; font-family:'Pixelify Sans'; text-align:center;">🐟 my fav things</h3>
+     <p data-template-id="bia-favs" class="canva-text text-sm" style="color:#37474f;"></p>
+    </div><!-- Obsessed -->
+    <div style="background: linear-gradient(135deg, #e0f7fa, #e8f5e9); border:2px solid #80cbc4; border-radius:16px; padding:12px; max-width:350px; margin:20px auto;">
+     <h3 data-template-id="bia-obsessed-title" class="canva-text font-pixel text-center" style="color:#00695c;"></h3>
+     <p data-template-id="bia-obsessed" class="canva-text text-sm text-center" style="color:#37474f;"></p>
+    </div><!-- Winamp -->
+    <div class="winamp mx-auto my-6" style="background: linear-gradient(180deg,#e0f7fa,#b2ebf2); border-color:#80deea;">
+     <div class="winamp-display" id="bia-winamp-display" style="color:#00695c; background:#e0f7fa;">
+      ♫ Owl City - Fireflies
+     </div>
+     <div class="flex gap-1"><button class="winamp-btn" onclick="togglePlay('bia')" style="background:linear-gradient(180deg,#80cbc4,#4db6ac);">▶</button> <button class="winamp-btn" onclick="stopPlay('bia')" style="background:linear-gradient(180deg,#80cbc4,#4db6ac);">■</button> <button class="winamp-btn" onclick="nextTrack('bia')" style="background:linear-gradient(180deg,#80cbc4,#4db6ac);">▶▶</button>
+     </div>
+    </div><!-- Guestbook -->
+    <div style="background:white; border:2px solid #00bcd4; border-radius:12px; padding:12px; max-width:400px; margin:20px auto;">
+     <h3 style="color:#00838f; font-family:'Pixelify Sans'; text-align:center;">🫧 guestbook</h3>
+     <div id="bia-guestbook" class="max-h-32 overflow-y-auto mb-2">
+      <div class="guestbook-entry" style="border-color:#80deea; color:#00695c;">
+       cool site!! love the fishies - sofia 🐠
+      </div>
+     </div>
+     <form onsubmit="addGuestbook(event,'bia')" class="flex gap-1"><input type="text" id="bia-gb-input" class="flex-1 border-2 border-teal-300 rounded-full px-3 py-1 text-sm" placeholder="leave a msg..."> <button type="submit" style="background:#00bcd4; color:white; border:none; border-radius:20px; padding:4px 12px; font-size:12px; cursor:pointer;">sign!</button>
+     </form>
+    </div>
+   </div>
+  </section><!-- TASKBAR -->
+  <div class="taskbar"><button class="start-btn">▶ Start</button>
+   <div class="flex-1"></div><span style="color:white; font-family:'VT323'; font-size:14px; padding-right:8px;" id="taskbar-clock"></span>
+  </div>
+  <script src="/_sdk/editing_sdk.js"></script>
+  <script>
+    // Page switching
+    function switchPage(name) {
+        document.querySelectorAll('[id^="page-"]').forEach(p => p.classList.add('hidden'));
+        document.getElementById('page-' + name).classList.remove('hidden');
+        document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+        event.target.classList.add('active');
+    }
+
+    // Visit counters
+    const counters = { maria: 1247, sofia: 983, luna: 666, bia: 1102 };
+    Object.keys(counters).forEach(k => {
+        const el = document.getElementById(k + '-counter');
+        if (el) el.textContent = counters[k] + Math.floor(Math.random() * 50);
+    });
+
+    // Guestbook
+    function addGuestbook(e, page) {
+        e.preventDefault();
+        const input = document.getElementById(page + '-gb-input');
+        if (!input.value.trim()) return;
+        const div = document.createElement('div');
+        div.className = 'guestbook-entry';
+        div.style.borderColor = page === 'luna' ? '#1a1a3a' : page === 'maria' ? '#c9a' : page === 'sofia' ? '#f9c' : '#80deea';
+        div.style.color = page === 'luna' ? '#556' : page === 'maria' ? '#633' : page === 'sofia' ? '#c06' : '#00695c';
+        div.textContent = input.value + ' - anon';
+        document.getElementById(page + '-guestbook').appendChild(div);
+        input.value = '';
+    }
+
+    // Winamp playlists
+    const playlists = {
+        maria: ['Lana Del Rey - Video Games', 'Melanie Martinez - Dollhouse', 'Lana Del Rey - Summertime Sadness', 'Marina - Teen Idle'],
+        sofia: ["Destiny's Child - Say My Name", 'Britney Spears - Toxic', 'Hilary Duff - So Yesterday', 'Avril Lavigne - Girlfriend'],
+        luna: ['Bladee - Obedient', 'Ecco2k - Peroxide', 'Yung Lean - Ginseng Strip', 'Crystal Castles - Crimewave'],
+        bia: ['Owl City - Fireflies', 'MGMT - Kids', 'Gorillaz - Feel Good Inc', 'Daft Punk - Digital Love']
+    };
+    const playState = { maria: 0, sofia: 0, luna: 0, bia: 0 };
+
+    function togglePlay(page) {
+        const display = document.getElementById(page + '-winamp-display');
+        display.textContent = '▶ ' + playlists[page][playState[page]];
+    }
+    function stopPlay(page) {
+        const display = document.getElementById(page + '-winamp-display');
+        display.textContent = '■ stopped';
+    }
+    function nextTrack(page) {
+        playState[page] = (playState[page] + 1) % playlists[page].length;
+        const display = document.getElementById(page + '-winamp-display');
+        display.textContent = '♫ ' + playlists[page][playState[page]];
+    }
+
+    // Clock
+    function updateClock() {
+        const now = new Date();
+        document.getElementById('taskbar-clock').textContent = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+    }
+    updateClock();
+    setInterval(updateClock, 30000);
+
+    lucide.createIcons();
+</script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a05b0fc6fc1ec27c',t:'MTc4MDQ1MTU3OQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
